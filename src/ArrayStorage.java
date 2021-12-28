@@ -24,6 +24,7 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
+        //
     }
 
     /**
