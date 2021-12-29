@@ -24,16 +24,6 @@ public class MainArray {
                 uuid = params[1].intern();
             }
             switch (params[0]) {
-
-                //my
-                case "getall":
-                    ARRAY_STORAGE.getAll();
-
-                case "check":
-                    System.out.println(ARRAY_STORAGE.check(0));
-                    System.out.println(ARRAY_STORAGE.check(1));
-                    System.out.println(ARRAY_STORAGE.check(2));
-
                 case "list":
                     printAll();
                     break;
