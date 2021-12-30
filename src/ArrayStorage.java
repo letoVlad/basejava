@@ -9,9 +9,7 @@ public class ArrayStorage {
 
     void clear() {
         for (int i = 0; i < size; i++) {
-            if (storage[i].uuid != null) {
-                storage[i] = null;
-            }
+            storage[i] = null;
         }
         size = 0;
     }
