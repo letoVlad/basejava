@@ -1,13 +1,19 @@
+package com.urise.webapp;
+
+import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.ArrayStorage;
+
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Interactive test for ArrayStorage implementation
+ * Interactive test for com.urise.webapp.storage.ArrayStorage implementation
  * (just run, no need to understand)
  */
 public class MainArray {
-    private final static ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    private  static ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -24,6 +30,7 @@ public class MainArray {
                 uuid = params[1].intern();
             }
             switch (params[0]) {
+
                 case "list":
                     printAll();
                     break;
@@ -32,10 +39,12 @@ public class MainArray {
                     break;
                 case "save":
                     r = new Resume();
-                    r.uuid = uuid;
+                    r.setUuid(uuid);
                     ARRAY_STORAGE.save(r);
                     printAll();
                     break;
+                case "update":
+                    ARRAY_STORAGE.update(ARRAY_STORAGE.get(uuid));
                 case "delete":
                     ARRAY_STORAGE.delete(uuid);
                     printAll();
