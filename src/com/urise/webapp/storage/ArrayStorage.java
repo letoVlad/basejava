@@ -6,9 +6,9 @@ import java.util.Arrays;
 
 public class ArrayStorage {
     private Resume[] storage = new Resume[10];
-    private int size;
+    private int size = 0;
 
-    public int check(String uuid) {
+    private int check(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid() == uuid) {
                 return i;
@@ -18,18 +18,15 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        if (check(resume.getUuid()) != -1) {
+        int index = check(resume.getUuid());
+        if (check(resume.getUuid()) != -1 & resume.getUuid() == storage[index].getUuid()) {
             System.out.println("Резюме " + resume.getUuid() + " есть в списке");
-            for (int i = 0; i < size; i++) {
-                if (resume.getUuid() == storage[i].getUuid()) {
-                    storage[i] = resume;
-                }
-            }
+            storage[index] = resume;
         }
     }
 
     public void clear() {
-        Arrays.fill(storage, null);
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
@@ -46,29 +43,20 @@ public class ArrayStorage {
 
     public Resume get(String uuid) {
         int index = check(uuid);
-        if (index != -1) {
+        if (index != -1 & check(uuid) == index) {
             System.out.println("Резюме " + uuid + " есть в списке");
-            for (int i = 0; i < size; i++) {
-                if (storage[i].getUuid() == uuid) {
-                    return storage[i];
-                }
-            }
+            return storage[index];
         }
         return null;
     }
 
     public void delete(String uuid) {
         int index = check(uuid);
-        if (index != -1) {
+        if (index != -1 & uuid.equals(storage[index].getUuid())) {
             System.out.println("Резюме " + uuid + " есть в списке");
-            for (int i = 0; i < size; i++) {
-                if (uuid.equals(storage[i].getUuid())) {
-                    storage[i] = storage[size - 1];
-                    storage[size - 1] = null;
-                    size--;
-                    break;
-                }
-            }
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
         }
     }
 
