@@ -19,8 +19,9 @@ public class ArrayStorage {
 
     public void update(Resume resume) {
         int index = check(resume.getUuid());
-        if (check(resume.getUuid()) != -1 & resume.getUuid() == storage[index].getUuid()) {
-            System.out.println("Резюме " + resume.getUuid() + " есть в списке");
+        if (index == -1) {
+            System.out.println("Данного резюме " + resume.getUuid() + " нет в списке");
+        } else {
             storage[index] = resume;
         }
     }
@@ -43,17 +44,19 @@ public class ArrayStorage {
 
     public Resume get(String uuid) {
         int index = check(uuid);
-        if (index != -1 & check(uuid) == index) {
-            System.out.println("Резюме " + uuid + " есть в списке");
+        if (index == -1) {
+            System.out.println("Данного резюме " + uuid + " нет в списке");
+            return null;
+        } else {
             return storage[index];
         }
-        return null;
     }
 
     public void delete(String uuid) {
         int index = check(uuid);
-        if (index != -1 & uuid.equals(storage[index].getUuid())) {
-            System.out.println("Резюме " + uuid + " есть в списке");
+        if (index == -1) {
+            System.out.println("Данного резюме " + uuid + " нет в списке");
+        } else {
             storage[index] = storage[size - 1];
             storage[size - 1] = null;
             size--;
