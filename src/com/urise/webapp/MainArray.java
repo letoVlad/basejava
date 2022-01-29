@@ -1,23 +1,27 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.Resume;
+
+
 import com.urise.webapp.storage.ArrayStorage;
 import com.urise.webapp.storage.SortedArrayStorage;
 import com.urise.webapp.storage.Storage;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+
 
 /**
  * Interactive test for com.urise.webapp.storage.ArrayStorage implementation
  * (just run, no need to understand)
  */
 public class MainArray {
-    private final static Storage ARRAY_STORAGE = new ArrayStorage();
+    private final static Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) throws IOException {
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Resume r;
         Resume r1 = new Resume();
@@ -26,7 +30,6 @@ public class MainArray {
         r2.setUuid("r2");
         Resume r3 = new Resume();
         r3.setUuid("r3");
-        Resume r4 = new Resume();
         ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
@@ -72,6 +75,9 @@ public class MainArray {
                     break;
                 case "clear":
                     ARRAY_STORAGE.clear();
+                    printAll();
+                    break;
+                case "print":
                     printAll();
                     break;
                 case "exit":

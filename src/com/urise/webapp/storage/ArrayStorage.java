@@ -6,7 +6,18 @@ import java.util.Arrays;
 
 public class ArrayStorage extends AbstractArrayStorage {
 
-    protected int check(String uuid) {
+    @Override
+    protected void deletedElement(int index) {
+        storage[index] = storage[size - 1];
+    }
+
+    @Override
+    protected void saveElement(int index, Resume r) {
+        storage[size] = r;
+    }
+
+    @Override
+    protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid() == uuid) {
                 return i;
@@ -24,4 +35,3 @@ public class ArrayStorage extends AbstractArrayStorage {
 
 
 }
-

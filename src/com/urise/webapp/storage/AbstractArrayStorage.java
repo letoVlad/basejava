@@ -21,8 +21,8 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public void update(Resume resume) {
-        int index = check(resume.getUuid());
-        if (index == -1) {
+        int index = getIndex(resume.getUuid());
+        if (index  >= 0) {
             System.out.println("Данного резюме " + resume.getUuid() + " нет в списке");
         } else {
             storage[index] = resume;
@@ -30,30 +30,30 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public void delete(String uuid) {
-        int index = check(uuid);
-        if (index == -1) {
+        int index = getIndex(uuid);
+        System.out.println(index);
+        if (index  < 0) {
             System.out.println("Данного резюме " + uuid + " нет в списке");
         } else {
-            storage[index] = storage[size - 1];
-            storage[size - 1] = null;
-            size--;
+            deletedElement(index);
         }
     }
 
     public void save(Resume r) {
-        if (check(r.getUuid()) != -1) {
+        int index = getIndex(r.getUuid());
+        System.out.println(index);
+        if (index  >= 0) {
             System.out.println("Резюме " + r.getUuid() + " есть в списке");
         } else if (size == STORAGE_LIMIT) {
             System.out.println("Переполнен");
         } else {
-            storage[size] = r;
-            size++;
+            saveElement(index, r);
         }
     }
 
     public Resume get(String uuid) {
-        int index = check(uuid);
-        if (index == -1) {
+        int index = getIndex(uuid);
+        if (index  >= 0) {
             System.out.println("Данного резюме " + uuid + " нет в списке");
             return null;
         } else {
@@ -61,6 +61,8 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    protected abstract int check(String uuid);
+    protected abstract void deletedElement(int index);
+    protected abstract void saveElement(int index, Resume r);
+    protected abstract int getIndex(String uuid);
 }
 
