@@ -35,6 +35,7 @@ public abstract class AbstractArrayStorage implements Storage {
             System.out.println("Данного резюме " + uuid + " нет в массиве");
         } else {
             deletedElement(index);
+            size--;
         }
     }
 
@@ -46,6 +47,7 @@ public abstract class AbstractArrayStorage implements Storage {
             System.out.println("Массив переполнен");
         } else {
             saveElement(index, r);
+            size++;
         }
     }
 
