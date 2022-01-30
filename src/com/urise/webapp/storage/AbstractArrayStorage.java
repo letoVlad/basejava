@@ -14,7 +14,6 @@ public abstract class AbstractArrayStorage implements Storage {
         return size;
     }
 
-
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
@@ -22,8 +21,8 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
-        if (index  >= 0) {
-            System.out.println("Данного резюме " + resume.getUuid() + " нет в списке");
+        if (index  < 0) {
+            System.out.println("Данного резюме " + resume.getUuid() + " нет в массиве");
         } else {
             storage[index] = resume;
         }
@@ -33,7 +32,7 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = getIndex(uuid);
         System.out.println(index);
         if (index  < 0) {
-            System.out.println("Данного резюме " + uuid + " нет в списке");
+            System.out.println("Данного резюме " + uuid + " нет в массиве");
         } else {
             deletedElement(index);
         }
@@ -41,11 +40,10 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
-        System.out.println(index);
         if (index  >= 0) {
-            System.out.println("Резюме " + r.getUuid() + " есть в списке");
+            System.out.println("Резюме " + r.getUuid() + " есть в массиве");
         } else if (size == STORAGE_LIMIT) {
-            System.out.println("Переполнен");
+            System.out.println("Массив переполнен");
         } else {
             saveElement(index, r);
         }
@@ -56,13 +54,17 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index  >= 0) {
             System.out.println("Данного резюме " + uuid + " нет в списке");
             return null;
-        } else {
-            return storage[index];
         }
+        return storage[index];
+    }
+    
+      public Resume[] getAll() {
+        return Arrays.copyOfRange(storage, 0, size);
     }
 
     protected abstract void deletedElement(int index);
+    
     protected abstract void saveElement(int index, Resume r);
+    
     protected abstract int getIndex(String uuid);
 }
-
