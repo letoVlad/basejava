@@ -32,6 +32,4 @@ public class ArrayStorage extends AbstractArrayStorage {
     public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size);
     }
-
-
 }
