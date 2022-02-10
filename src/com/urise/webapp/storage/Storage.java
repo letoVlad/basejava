@@ -1,7 +1,7 @@
 
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.MyException;
+
 import com.urise.webapp.model.Resume;
 
 public interface Storage {
@@ -14,7 +14,7 @@ public interface Storage {
 
     Resume get(String uuid) throws Exception;
 
-    void delete(String uuid) throws MyException;
+    void delete(String uuid);
 
     /**
      * @return array, contains only Resumes in storage (without null)

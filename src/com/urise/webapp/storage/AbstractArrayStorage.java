@@ -1,7 +1,7 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.ExistStorageException;
-import com.urise.webapp.exception.MyException;
+
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
