@@ -3,6 +3,7 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exception.ExistStorageException;
 
 import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -26,19 +27,17 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = getIndex(resume.getUuid());
         if (index < 0) {
             throw new NotExistStorageException(resume.getUuid());
-        } else {
-            storage[index] = resume;
         }
+        storage[index] = resume;
     }
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
             throw new NotExistStorageException(uuid);
-        } else {
-            deletedElement(index);
-            size--;
         }
+        deletedElement(index);
+        size--;
     }
 
     public void save(Resume r) {
@@ -46,11 +45,10 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             throw new ExistStorageException(r.getUuid());
         } else if (size == STORAGE_LIMIT) {
-            System.out.println("Переполнен");
-        } else {
-            saveElement(index, r);
-            size++;
+            throw new StorageException("Массив переполнен", r.getUuid());
         }
+        saveElement(index, r);
+        size++;
     }
 
     public Resume get(String uuid) {
