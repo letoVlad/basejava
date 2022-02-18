@@ -30,6 +30,7 @@ public abstract class AbstractArrayStorageTest {
         this.storage = storage;
     }
 
+
     @Before
     public void setUp() {
         storage.clear();
@@ -75,9 +76,9 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void save() {
-        storage.save(new Resume(UUID_4));
-        storage.get(UUID_4);
+        storage.save(Resume_4);
         assertEquals(4, storage.size());
+        assertEquals(Resume_4, storage.get(Resume_4.getUuid()));
     }
 
     @Test(expected = StorageException.class)
