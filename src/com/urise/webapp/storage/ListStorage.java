@@ -8,29 +8,19 @@ public class ListStorage extends AbstractStorage {
     protected ArrayList<Resume> list = new ArrayList<>();
 
     @Override
-    protected int goSize() {
-        return list.size();
-    }
-
-    @Override
     protected void goUpdate(Resume resume) {
         list.set(goGetIndex(resume.getUuid()), resume);
     }
 
     @Override
-    protected void goDelete(String uuid) {
-        list.remove(uuid);
+    public void goDelete(Object index) {
+        list.remove((int) index);
     }
 
     @Override
-    protected void goSave(Resume resume) {
-        list.add(resume);
-    }
-
-    @Override
-    protected int goGetIndex(String uuid) {
+    protected Integer goGetIndex(String uuid) {
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).equals(uuid)) {
+            if (list.get(i).getUuid().equals(uuid)) {
                 return i;
             }
         }
@@ -38,12 +28,27 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void goClear() {
+    public Resume goGet(int resume) {
+        return list.get(resume);
+    }
+
+    @Override
+    public Resume[] getAll() {
+        return list.toArray(new Resume[list.size()]);
+    }
+
+    @Override
+    public void goSave(Resume r) {
+        list.add(r);
+    }
+
+    @Override
+    public void clear() {
         list.clear();
     }
 
     @Override
-    protected Object[] goGetAll() {
-        return list.toArray();
+    public int size() {
+        return list.size();
     }
 }
