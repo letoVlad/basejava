@@ -8,7 +8,7 @@ import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -68,6 +68,6 @@ public abstract class AbstractArrayStorage implements Storage {
 
     protected abstract void saveElement(int index, Resume r);
 
-    protected abstract int getIndex(String uuid);
+    protected abstract Integer getIndex(String uuid);
 }
 
