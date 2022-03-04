@@ -39,8 +39,8 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public void saveResume(Resume r) {
-        list.add(r);
+    public void saveResume(int index, Resume resume) {
+        list.add(resume);
     }
 
     @Override

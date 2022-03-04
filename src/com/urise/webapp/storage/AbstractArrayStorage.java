@@ -1,8 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.ExistStorageException;
-
-import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
@@ -23,40 +20,29 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
-    public void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index < 0) {
-            throw new NotExistStorageException(resume.getUuid());
-        }
+    @Override
+    protected void updateResume(int index, Resume resume) {
         storage[index] = resume;
     }
 
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        deletedElement(index);
+    @Override
+    public void deleteResume(Object index) {
+        deleteFromArray((int) index);
+        storage[size - 1] = null;
         size--;
     }
 
-    public void save(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
-        }
+    @Override
+    protected void saveResume(int index, Resume resume) {
         if (size == STORAGE_LIMIT) {
-            throw new StorageException("Массив переполнен", r.getUuid());
+            throw new StorageException("Массив переполнен", resume.getUuid());
         }
-        saveElement(index, r);
+        saveToArray(index, resume);
         size++;
     }
 
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
+    @Override
+    public Resume goGet(int index) {
         return storage[index];
     }
 
@@ -64,9 +50,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOf(storage, size);
     }
 
-    protected abstract void deletedElement(int index);
+    protected abstract void deleteFromArray(int index);
 
-    protected abstract void saveElement(int index, Resume r);
+    protected abstract void saveToArray(int index, Resume r);
 
     protected abstract Integer getIndex(String uuid);
 }

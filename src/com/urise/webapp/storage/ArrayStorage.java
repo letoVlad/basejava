@@ -2,17 +2,15 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-import java.util.Arrays;
-
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected void deletedElement(int index) {
+    protected void deleteFromArray(int index) {
         storage[index] = storage[size - 1];
     }
 
     @Override
-    protected void saveElement(int index, Resume r) {
+    protected void saveToArray(int index, Resume r) {
         storage[size] = r;
     }
 
@@ -26,20 +24,4 @@ public class ArrayStorage extends AbstractArrayStorage {
         return -1;
     }
 
-    @Override
-    protected void updateResume(int index, Resume resume) {
-    }
-
-    @Override
-    protected void deleteResume(Object index) {
-    }
-
-    @Override
-    protected Resume goGet(int resume) {
-        return null;
-    }
-
-    @Override
-    protected void saveResume(Resume resume) {
-    }
 }
