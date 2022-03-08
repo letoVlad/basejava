@@ -14,7 +14,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public void deleteResume(Object index) {
+    public void deleteResume(Object index, String uuid) {
         list.remove((int) index);
     }
 
@@ -29,8 +29,8 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume goGet(int resume) {
-        return list.get(resume);
+    public Resume getResume(int index, String uuid) {
+        return list.get(index);
     }
 
     @Override
