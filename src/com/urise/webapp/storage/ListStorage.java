@@ -9,28 +9,33 @@ public class ListStorage extends AbstractStorage {
     private List<Resume> list = new ArrayList<>();
 
     @Override
-    protected void updateResume(int index, Resume resume) {
-        list.set(index, resume);
+    protected boolean isExist(Object searchKey) {
+        return searchKey != null;
     }
 
     @Override
-    public void deleteResume(Object index, String uuid) {
-        list.remove((int) index);
+    protected void updateResume(Object searchKey, Resume resume) {
+        list.set((Integer) searchKey, resume);
     }
 
     @Override
-    protected Integer getIndex(String uuid) {
+    public void deleteResume(Object searchKey, String uuid) {
+        list.remove((Integer) searchKey);
+    }
+
+    @Override
+    protected Integer getSearchKey(String index) {
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getUuid().equals(uuid)) {
+            if (list.get(i).getUuid().equals(index)) {
                 return i;
             }
         }
-        return -1;
+        return null;
     }
 
     @Override
-    public Resume getResume(int index, String uuid) {
-        return list.get(index);
+    public Resume getResume(Object searchKey, String uuid) {
+        return list.get((Integer) searchKey);
     }
 
     @Override
@@ -39,7 +44,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public void saveResume(int index, Resume resume) {
+    public void saveResume(Object searchKey, Resume resume) {
         list.add(resume);
     }
 

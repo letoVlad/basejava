@@ -6,51 +6,56 @@ import com.urise.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    @Override
-    public void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index < 0) {
-            throw new NotExistStorageException(resume.getUuid());
-        }
-        updateResume(index, resume);
+    public void save(Resume resume) {
+        String uuid = resume.getUuid();
+        Object searchKey = getExistingSearchKey(uuid);
+        saveResume(searchKey, resume);
+    }
+
+    public void delete(String uuid) {
+        Object searchKey = getNotExistingSearchKey(uuid);
+        deleteResume(searchKey, uuid);
     }
 
     @Override
-    public void save(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(resume.getUuid());
-        }
-        saveResume(index, resume);
+    public void update(Resume resume) {
+        String uuid = resume.getUuid();
+        Object searchKey = getNotExistingSearchKey(uuid);
+        updateResume(searchKey, resume);
     }
 
     @Override
     public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        return getResume(index, uuid);
+        Object searchKey = getNotExistingSearchKey(uuid);
+        return getResume(searchKey, uuid);
     }
 
-    @Override
-    public void delete(String uuid) {
-        Object index = getIndex(uuid);
-        if ((int) index < 0) {
-            throw new NotExistStorageException(uuid);
+    private Object getExistingSearchKey(String uuid) {
+        Object searchKey = getSearchKey(uuid);
+        if (isExist(searchKey)) {
+            throw new ExistStorageException(uuid);
         }
-        deleteResume(index, uuid);
+        return searchKey;
     }
 
+    private Object getNotExistingSearchKey(String uuid) {
+        Object searchKey = getSearchKey(uuid);
+        if (!isExist(searchKey)) {
+            throw new NotExistStorageException(uuid);
+        }
+        return searchKey;
+    }
 
-    protected abstract void updateResume(int index, Resume resume);
+    protected abstract boolean isExist(Object searchKey);
 
-    protected abstract void deleteResume(Object index, String uuid);
+    protected abstract void updateResume(Object searchKey, Resume resume);
 
-    protected abstract Integer getIndex(String uuid);
+    protected abstract void deleteResume(Object searchKey, String uuid);
 
-    protected abstract Resume getResume(int index, String uuid);
+    protected abstract Object getSearchKey(String index);
 
-    protected abstract void saveResume(int index, Resume resume);
+    protected abstract Resume getResume(Object searchKey, String uuid);
+
+    protected abstract void saveResume(Object searchKey, Resume resume);
 
 }
