@@ -18,13 +18,13 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected void deleteResume(Object searchKey, String uuid) {
-        map.remove(uuid);
+    protected void deleteResume(Object searchKey) {
+        map.remove(searchKey);
     }
 
     @Override
-    public Object getSearchKey(String index) {
-        return map.get(index) == null ? null : index;
+    public Object getSearchKey(String uuid) {
+        return map.containsKey(uuid) ? uuid : null;
     }
 
     @Override

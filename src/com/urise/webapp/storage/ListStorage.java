@@ -19,14 +19,14 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public void deleteResume(Object searchKey, String uuid) {
+    public void deleteResume(Object searchKey) {
         list.remove((Integer) searchKey);
     }
 
     @Override
-    protected Integer getSearchKey(String index) {
+    protected Integer getSearchKey(String uuid) {
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getUuid().equals(index)) {
+            if (list.get(i).getUuid().equals(uuid)) {
                 return i;
             }
         }

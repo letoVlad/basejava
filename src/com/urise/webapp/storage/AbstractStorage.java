@@ -8,29 +8,29 @@ public abstract class AbstractStorage implements Storage {
 
     public void save(Resume resume) {
         String uuid = resume.getUuid();
-        Object searchKey = getExistingSearchKey(uuid);
+        Object searchKey = getNotExistingSearchKey(uuid);
         saveResume(searchKey, resume);
     }
 
     public void delete(String uuid) {
-        Object searchKey = getNotExistingSearchKey(uuid);
-        deleteResume(searchKey, uuid);
+        Object searchKey = getExistingSearchKey(uuid);
+        deleteResume(searchKey);
     }
 
     @Override
     public void update(Resume resume) {
         String uuid = resume.getUuid();
-        Object searchKey = getNotExistingSearchKey(uuid);
+        Object searchKey = getExistingSearchKey(uuid);
         updateResume(searchKey, resume);
     }
 
     @Override
     public Resume get(String uuid) {
-        Object searchKey = getNotExistingSearchKey(uuid);
+        Object searchKey = getExistingSearchKey(uuid);
         return getResume(searchKey, uuid);
     }
 
-    private Object getExistingSearchKey(String uuid) {
+    private Object getNotExistingSearchKey(String uuid) {
         Object searchKey = getSearchKey(uuid);
         if (isExist(searchKey)) {
             throw new ExistStorageException(uuid);
@@ -38,7 +38,7 @@ public abstract class AbstractStorage implements Storage {
         return searchKey;
     }
 
-    private Object getNotExistingSearchKey(String uuid) {
+    private Object getExistingSearchKey (String uuid) {
         Object searchKey = getSearchKey(uuid);
         if (!isExist(searchKey)) {
             throw new NotExistStorageException(uuid);
@@ -50,9 +50,9 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void updateResume(Object searchKey, Resume resume);
 
-    protected abstract void deleteResume(Object searchKey, String uuid);
+    protected abstract void deleteResume(Object searchKey);
 
-    protected abstract Object getSearchKey(String index);
+    protected abstract Object getSearchKey(String uuid);
 
     protected abstract Resume getResume(Object searchKey, String uuid);
 
