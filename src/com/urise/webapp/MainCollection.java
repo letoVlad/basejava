@@ -43,9 +43,9 @@ public class MainCollection {
 
         Map<String, Resume> map = new HashMap<>();
 
-            map.put(UUID_1, resume_1);
-            map.put(UUID_2, resume_2);
-            map.put(UUID_3, resume_3);
+        map.put(UUID_1, resume_1);
+        map.put(UUID_2, resume_2);
+        map.put(UUID_3, resume_3);
 
         for (String uuid : map.keySet()) {
             System.out.println(map.get(uuid));
@@ -54,5 +54,8 @@ public class MainCollection {
         for (Map.Entry<String, Resume> entry : map.entrySet()) {
             System.out.println(entry.getValue());
         }
+        List<Resume> resumes = Arrays.asList(resume_1, resume_2, resume_3);
+        resumes.remove(resume_1);
+        System.out.println(resumes);
     }
 }

@@ -4,7 +4,7 @@ import com.urise.webapp.model.Resume;
 
 import java.util.*;
 
-public class MapStorage extends AbstractStorage {
+public class MapResumeStorage extends AbstractStorage {
     private Map<String, Resume> map = new HashMap<>();
 
     @Override
@@ -28,7 +28,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume getResume(Object searchKey, String uuid) {
+    public Resume getResume(Object searchKey) {
         return map.get(searchKey);
 
     }
@@ -44,8 +44,8 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return map.values().toArray(new Resume[0]);
+    public List<Resume> doCopyAll() {
+        return new ArrayList<>(map.values());
     }
 
     @Override
